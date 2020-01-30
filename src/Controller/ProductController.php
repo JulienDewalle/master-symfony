@@ -59,12 +59,17 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route ("/product/remove/{id}", name="product_remove")
+     * @Route ("/product/remove/{id}", name="product_remove", methods={"POST"})
      */
-    public function remove(Product $product, EntityManagerInterface $entityManager) {
+    public function remove(Request $request, Product $product, EntityManagerInterface $entityManager) {
 
+        //on vérifie la validité du token CSRF  On se protege d'une faille CSRF
+        if ($this->isCsrfTokenValid('remove', $request->get('token'))){
         $entityManager->remove($product);
         $entityManager->flush();
+        }
+
+        $this->addFlash('success', 'Votre produit est supprimé');
 
         return $this->redirectToRoute('product_all');
 
