@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,6 +59,18 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route ("/product/remove/{id}", name="product_remove")
+     */
+    public function remove(Product $product, EntityManagerInterface $entityManager) {
+
+        $entityManager->remove($product);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('product_all');
+
+    }
+
+    /**
      * @Route("/product/{id}", name="product_show")
      */
     public function show($id/*Product $product permet de remplacer toute la selection du dessous */) {
@@ -75,4 +89,26 @@ class ProductController extends AbstractController
             'product' => $product,
         ]);
     }
+
+    /**
+     * @Route ("/product/edit/{id}", name="product_edit")
+     */
+
+    public function edit(Product $product, Request $request, EntityManagerInterface $productRepository)
+    {
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $productRepository->persist($product);
+            $productRepository->flush();
+
+            $this->addFlash('success', 'Votre produit est mofidié');
+
+        }
+        return $this->render('product/edit.html.twig', [
+            'product' => $form->createView()
+        ]);
+    }
+
 }

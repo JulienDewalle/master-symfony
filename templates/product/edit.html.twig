@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for message in app.flashes('success') %}
+    <div class="text-center text-success">
+        {{ message }} 
+    </div> 
+{% endfor %}
+    <h1 class="text-center text-danger mt-3">Modifier un produit</h1>
+
+    {{ form_start(product, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(product) }}
+        <div class="text-center">
+            <button class="btn btn-danger btn-lg">Modifier</button>
+        </div>
+    {{ form_end(product) }}
+{% endblock %}

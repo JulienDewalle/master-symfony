@@ -12,6 +12,10 @@
             <h6 class="card-subtitle mb-2 text-muted">{{ product.price / 100 }} euros</h6>
             <p class="h5">{{ product.description }}</p>
             <a href="{{ path('product_show', { id: product.id }) }}" class="btn btn-danger">Voir le produit</a>
+            <div class="row">
+                <a href="{{ path('product_edit', {id: product.id}) }}"  class="btn btn-danger mt-3 col-md-6">Modifier</a>
+                <a href="{{ path('product_remove', {id: product.id}) }}"  class="btn btn-danger mt-3 col-md-6">Supprimer</a>
+            </div>
         </div>
     </div>
     {% endfor %}
