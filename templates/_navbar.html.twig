@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="{{ path('homepage') }}">Master</a>
+        <a class="navbar-brand text-danger" href="{{ path('homepage') }}">Master</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -8,15 +8,18 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('homepage') }}">Accueil</a>
+                    <a class="nav-link text-danger" href="{{ path('homepage') }}">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('product_create') }}">Ajouter un produit</a>
+                    <a class="nav-link text-danger" href="{{ path('product_create') }}">Ajouter un produit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="{{ path('product_all') }}">Tout les produits</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+                <button class="btn btn-outline-danger my-2 my-sm-0">Search</button>
             </form>
         </div>
     </div> <!-- .container -->
