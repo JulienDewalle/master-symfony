@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Categorie;
 use App\Entity\Product;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -37,6 +38,16 @@ class AppFixtures extends Fixture
             $users[] = $user;       
         }
 
+        //on crée les catégories
+        $categories = [];
+        for($i=0; $i<=5; $i++) {
+            $categorie = new Categorie();
+            $categorie->setName($faker->word);
+            $categorie->setSlug($this->slugger->slug($categorie->getName())->lower());
+            $manager->persist($categorie);
+            $categories[$i] = $categorie;
+        }
+
 
         //on crée les produits
         for ($i=0; $i <= 100; $i++) {
@@ -46,6 +57,7 @@ class AppFixtures extends Fixture
         $product->setDescription('Un iPhone de '.rand(2000, 2020));
         $product->setPrice(rand(10, 100)*100);
         $product->setUser($users[rand(0, 9)]);
+        $product->setCategorie($categories[rand(0, 5)]);
         $manager->persist($product);
     }
 

@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CategorieRepository")
  */
-class Product
+class Categorie
 {
     /**
      * @ORM\Id()
@@ -18,25 +19,14 @@ class Product
     private $id;
 
     /**
-     * @Assert\NotBlank
-     * 
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-     * @Assert\NotBlank
-     * @Assert\Length(min=5)
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
-
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="integer")
-     * @Assert\Positive
-     */
-    private $price;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -44,15 +34,14 @@ class Product
     private $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="Categorie")
      */
-    private $user;
+    private $products;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="products")
-     */
-    private $Categorie;
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -83,18 +72,6 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?int
-    {
-        return $this->price;
-    }
-
-    public function setPrice(int $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -107,26 +84,33 @@ class Product
         return $this;
     }
 
-    public function getUser(): ?User
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
     {
-        return $this->user;
+        return $this->products;
     }
 
-    public function setUser(?User $user): self
+    public function addProduct(Product $product): self
     {
-        $this->user = $user;
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setCategorie($this);
+        }
 
         return $this;
     }
 
-    public function getCategorie(): ?Categorie
+    public function removeProduct(Product $product): self
     {
-        return $this->Categorie;
-    }
-
-    public function setCategorie(?Categorie $Categorie): self
-    {
-        $this->Categorie = $Categorie;
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            // set the owning side to null (unless already changed)
+            if ($product->getCategorie() === $this) {
+                $product->setCategorie(null);
+            }
+        }
 
         return $this;
     }
