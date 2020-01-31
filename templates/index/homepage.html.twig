@@ -1,5 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
     <h1 class="text-center text-danger mt-3">Bienvenue sur mon site</h1>
+
+    <h2 class="text-center text-danger mt-3">Nos produits les plus vendus</h2>
+
+
+    <div class="row mt-5 justify-content-between">
+        {% for product in products %}
+            <div class="card shadow text-center text-dark bg-light mx-1 mt-5">
+                <div class="card-body">
+                    <h5 class="card-title text-danger mt-3">{{ product.name }}</h5>
+                    <p class="card-subtitle mb-2 text-muted mt-3 h6"><strong>{{ product.price / 10}} euros</strong></p>
+                    <p class="h5" style="height: 100px;">{{ product.description }}</p>
+                    <a href="{{ path('product_show', { slug: product.slug }) }}" class="btn btn-primary w-100">Voir le produit</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {%  %}
+        <h2 class="text-center text-danger mt-3">Notre produit favori</h2>
+        <div class="card shadow text-center text-dark bg-light mx-1 mt-5 w-25 mx-auto">
+            <div class="card-body">
+                <h5 class="card-title text-danger mt-3">{{ favorite_product.name }}</h5>
+                <p class="card-subtitle mb-2 text-muted mt-3 h6"><strong>{{ favorite_product.price / 10 }}</strong></p>
+                <a href="{{ path('product_show', {slug: favorite_product.slug}) }}"class="btn btn-primary w-100">Voir</a>
+            </div>
+        </div>
+    {%  %}
 {% endblock %}

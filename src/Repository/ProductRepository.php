@@ -19,22 +19,40 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Permet de récuperer les produits plus chers qu'un certain montant
+     */
+    public function findAllGreaterThanPrice($price): array 
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        // SELECT * FROM product WHERE price > 500
+
+        //SELECT id, name, description, slug FROM product p
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->Where('p.price > :price')
+            ->setParameter('price', $price * 10)
+            ->orderBy('p.price', 'ASC')
+            ->setMaxResults(4)
+            ->getQuery();
+        return $queryBuilder->getResult();
     }
-    */
+
+    /**
+     * Permet de récuperer le produit plus cher qu'un certain montant
+     */
+
+     public function findOneGreaterThanPrice($price): ?Product
+     {
+         $queryBuilder = $this->createQueryBuilder('p')
+         ->Where('p.price > :price')
+         ->setParameter('price', $price * 10)
+         ->orderBy('p.price', 'DESC')
+         ->getQuery();
+
+         return $queryBuilder->setMaxResults(1)->getOneOrNullResult();
+     }
+
+    
+
 
     /*
     public function findOneBySomeField($value): ?Product
