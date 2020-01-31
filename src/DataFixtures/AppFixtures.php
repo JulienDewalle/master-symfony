@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
         $categories = [];
         for($i=0; $i<=5; $i++) {
             $categorie = new Categorie();
-            $categorie->setName($faker->word);
+            $categorie->setName($faker->name);
             $categorie->setSlug($this->slugger->slug($categorie->getName())->lower());
             $manager->persist($categorie);
             $categories[$i] = $categorie;

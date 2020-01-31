@@ -26,6 +26,14 @@
         </tbody>
     </table>
 
+<div class="row">
+    {% for product in categorie.products %}
+    <div class="col-lg-4">
+         <h2>{{ product.name }} </h2>
+    </div>
+    {% endfor %}
+</div>
+
     <a href="{{ path('categorie_index') }}">back to list</a>
 
     <a href="{{ path('categorie_edit', {'id': categorie.id}) }}">edit</a>
