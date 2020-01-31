@@ -2,6 +2,7 @@
 
 {% block body %}
     <h1 class="text-center text-danger">{{ product.name }}</h1>
+    <p class="text-center h5">{{ product.slug }}</p>
     <p class="text-center h4">Prix : {{ product.price / 10 }}</p>
     <p class="text-center h5">{{ product.description }}</p>
 {% endblock %}

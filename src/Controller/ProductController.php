@@ -76,14 +76,15 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/product/{id}", name="product_show")
+     * @Route("/product/{slug}", name="product_show")
      */
-    public function show($id/*Product $product permet de remplacer toute la selection du dessous */) {
-        dump($id);
+    public function show($slug/*Product $product permet de remplacer toute la selection du dessous */) {
+
         // On récupere le dépôt qui contient nos produits
         $productRepository = $this->getDoctrine()->getRepository(Product::class);
-        // SELECT * FROM product WHERE id = $id
-        $product = $productRepository->find($id);
+        // SELECT * FROM product WHERE slug = $slug
+        //equivalent :  $product = $productRepository->findOneBySlug($slug);
+        $product = $productRepository->findOneBy(['slug' => $slug]);
 
         //Si le produit n'existe pas
         if(!$product) {
