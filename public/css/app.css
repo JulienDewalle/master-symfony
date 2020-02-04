@@ -1,0 +1,9 @@
+.bootstrap-tagsinput {
+    width: 100%;
+}
+.label-info{
+    background-color: #5bc0de;
+    border-radius: 5px;
+    color: red !important;
+    font-weight: bold;
+}
