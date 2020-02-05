@@ -19,6 +19,7 @@
             <p><a href="{{ path('categorie_show', { id: product.categorie.id}) }}">Categorie : {{ product.categorie.name }}<a></p>
             <p class="h5" style="height: 100px;">{{ product.description }}</p>
             <a href="{{ path('product_show', { slug: product.slug }) }}" class="btn btn-primary w-100">Voir le produit</a>
+            {% if is_granted('ROLE_ADMIN') %}
             <div class="d-flex justify-content-between">
                 <a href="{{ path('product_edit', {id: product.id}) }}"  class="btn btn-secondary mt-3" style="width: 90px; height: 45px;">Edit</a>
                 <!-- <a href="{{ path('product_remove', {id: product.id}) }}"  class="btn btn-danger mt-3 col-md-5 ml-3">Remove</a> -->
@@ -27,6 +28,7 @@
                     <button class="btn btn-danger" style="width: 90px; height: 45px;">Remove</button>
                 </form>
             </div>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
