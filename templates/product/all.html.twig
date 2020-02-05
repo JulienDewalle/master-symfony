@@ -12,13 +12,16 @@
     <div class="row mt-5 justify-content-between">
     {% for product in products %}
     <div class="card shadow text-center text-dark bg-light mx-1 mt-5">
-        <div class="card-body">
-            <h5 class="card-title text-danger mt-3">{{ product.name }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted mt-3">{{ product.price / 10}} euros</h6>
-            <p>Vendeur : <a href="{{ path('user_show', { id: product.user.id }) }}">{{ product.user.username }}</a></p>
-            <p><a href="{{ path('categorie_show', { id: product.categorie.id}) }}">Categorie : {{ product.categorie.name }}<a></p>
-            <p class="h5" style="height: 100px;">{{ product.description }}</p>
-            <a href="{{ path('product_show', { slug: product.slug }) }}" class="btn btn-primary w-100">Voir le produit</a>
+        <div class="card-body" style="width: 300px">
+            {% if product.image %}
+                <img class="card-img-top h-25" style="width: 250px;"src="{{ asset('uploads/' ~ product.image) }}" alt="{{ product.name }}">
+            {% endif %}
+                <h5 class="card-title text-danger mt-3">{{ product.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted mt-3">{{ product.price / 10}} euros</h6>
+                <p>Vendeur : <a href="{{ path('user_show', { id: product.user.id }) }}">{{ product.user.username }}</a></p>
+                <p><a href="{{ path('categorie_show', { id: product.categorie.id}) }}">Categorie : {{ product.categorie.name }}<a></p>
+                <p class="h5" style="height: 100px;">{{ product.description }}</p>
+                <a href="{{ path('product_show', { slug: product.slug }) }}" class="btn btn-primary w-100">Voir le produit</a>
 
             {% if is_granted('ROLE_ADMIN') or app.user == product.user %}
                 <div class="d-flex justify-content-between">
