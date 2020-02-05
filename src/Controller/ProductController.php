@@ -105,7 +105,7 @@ class ProductController extends AbstractController
      * @Route ("/product/edit/{id}", name="product_edit")
      */
 
-    public function edit(Product $product, Request $request, EntityManagerInterface $productRepository)
+    public function edit(Product $product, Request $request, EntityManagerInterface $productRepository, $uploadDir)
     {
         $this->denyAccessUnlessGranted('edit', $product);
 
@@ -113,6 +113,17 @@ class ProductController extends AbstractController
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // On fait l'upload ...
+            if ($image = $form->get('image')->getData()) {
+
+                // Génére le nom de l'image
+                $fileName = uniqid() . '.' . $image->guessExtension();
+                $image->move($uploadDir, $fileName);
+
+                //Mets a jour l'entité
+                $product->setImage($fileName);
+            }
 
             $productRepository->persist($product);
             $productRepository->flush();

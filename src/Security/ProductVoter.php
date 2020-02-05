@@ -15,11 +15,10 @@ class ProductVoter extends Voter
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
     {
         $user = $token->getUser();
-
         /** @var Product $product */
         $product = $subject;
-        //Si l'utilisateur connecté est le proprio du produit 
-        if ($product->getUser() === $user) {
+        // Si l'utilisateur connecté est le propriétaire du produit
+        if ($user === $product->getUser()) {
             return true;
         }
 

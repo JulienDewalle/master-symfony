@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Product;
 use App\Form\Type\TagsInputType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,6 +20,12 @@ class ProductType extends AbstractType
             ->add('description')
             ->add('price', MoneyType::class, [
                 'divisor' => 100,
+            ])
+            ->add('image', FileType::class, [
+                'mapped' => false,
+                'attr' => [
+                    'placeholder' => 'Choisir une image',
+                ],
             ])
             ->add('Categorie')
             ->add('user')

@@ -22,6 +22,7 @@ class CategorieController extends AbstractController
      */
     public function index(CategorieRepository $categorieRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('categorie/index.html.twig', [
             'categories' => $categorieRepository->findAll(),
         ]);
