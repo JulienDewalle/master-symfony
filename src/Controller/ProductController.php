@@ -102,11 +102,14 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route ("/admin/product/edit/{id}", name="product_edit")
+     * @Route ("/product/edit/{id}", name="product_edit")
      */
 
     public function edit(Product $product, Request $request, EntityManagerInterface $productRepository)
     {
+        $this->denyAccessUnlessGranted('edit', $product);
+
+        //on crée formulaire avec le produit à modifier
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

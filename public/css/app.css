@@ -7,3 +7,19 @@
     color: red !important;
     font-weight: bold;
 }
+
+.admin {
+    min-height: 100vh;
+}
+
+.admin-navbar{
+    width: 15vw;
+}
+
+.admin-navbar a {
+    color: white;
+    text-decoration: none;
+}
+.admin-navbar a:hover {
+    color: red;
+}

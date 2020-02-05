@@ -1,15 +1,19 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User:
+        App\Entity\User:
             algorithm: auto
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory:
-                users:
-                    julien: { password: '$argon2id$v=19$m=65536,t=4,p=1$a2sxMXV2SDNXbFZuUFB1ZA$GjNCJk1AFjmCx38+UoZTzATMejsCbHGbww33/KeIgKw', roles: [ 'ROLE_ADMIN' ] } #cocodu59
-                    jean: { password: '$argon2id$v=19$m=65536,t=4,p=1$SlhlNlZ1UmN1TmdaRmdFYg$7QmPSYWmxGHylZJfqIcEygKjgNfYlgwSoPrv/Es0Ilg', roles: [ 'ROLE_USER' ]} #coco
+        in_database:
+            entity:
+                class: App\Entity\User
+                property: username
+        #in_memory:
+        #    memory:
+        #       users:
+        #            julien: { password: '$argon2id$v=19$m=65536,t=4,p=1$a2sxMXV2SDNXbFZuUFB1ZA$GjNCJk1AFjmCx38+UoZTzATMejsCbHGbww33/KeIgKw', roles: [ 'ROLE_ADMIN' ] } #cocodu59
+        #            jean: { password: '$argon2id$v=19$m=65536,t=4,p=1$SlhlNlZ1UmN1TmdaRmdFYg$7QmPSYWmxGHylZJfqIcEygKjgNfYlgwSoPrv/Es0Ilg', roles: [ 'ROLE_USER' ]} #coco
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -37,3 +41,5 @@ security:
         # Pour faire un intranet
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/, roles: ROLE_USER }
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
