@@ -13,9 +13,11 @@
     {% for product in products %}
     <div class="card shadow text-center text-dark bg-light mx-1 mt-5">
         <div class="card-body" style="width: 300px">
+
             {% if product.image %}
                 <img class="card-img-top h-25" style="width: 250px;"src="{{ asset('uploads/' ~ product.image) }}" alt="{{ product.name }}">
             {% endif %}
+            
                 <h5 class="card-title text-danger mt-3">{{ product.name }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted mt-3">{{ product.price / 10}} euros</h6>
                 <p>Vendeur : <a href="{{ path('user_show', { id: product.user.id }) }}">{{ product.user.username }}</a></p>

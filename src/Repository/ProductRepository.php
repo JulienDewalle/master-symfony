@@ -56,6 +56,7 @@ class ProductRepository extends ServiceEntityRepository
          $queryBuilder = $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')
             ->addSelect('u')
+            ->orderBy('p.id', 'DESC')
             ->getQuery();
 
             return $queryBuilder->getResult();
