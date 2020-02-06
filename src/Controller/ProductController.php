@@ -17,10 +17,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/admin/product/create", name="product_create")
+     * @Route("/product/create", name="product_create")
      */
     public function create(Request $request, SluggerInterface $slugger, Uploader $uploader)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        
         $product = new Product();
         // On crée un formulaire avec deux paramètres: la classe du formulaire et l'objet à ajouter dans la BDD
         $form = $this->createForm(ProductType::class, $product);
@@ -39,6 +41,11 @@ class ProductController extends AbstractController
                 
                 // Je génére le slug à la creation du produit
                 $product->setSlug($slugger->slug($product->getName())->lower());
+
+                // Quand un vendeur crée un produit, on l'associe
+                if (!$product->getUser()) {
+                    $product->setUser($this->getUser());
+                }
 
                 // On peut aussi utiliser le typage :
                 // create(EntityManagerInterface $entityManager)
@@ -72,10 +79,11 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route ("/admin/product/remove/{id}", name="product_remove", methods={"POST"})
+     * @Route ("/product/remove/{id}", name="product_remove", methods={"POST"})
      */
     public function remove(Request $request, Product $product, EntityManagerInterface $entityManager, Uploader $uploader)
     {
+        $this->denyAccessUnlessGranted('remove', $product);
 
         //on vérifie la validité du token CSRF  On se protege d'une faille CSRF
         if ($this->isCsrfTokenValid('remove', $request->get('token'))){

@@ -10,7 +10,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-danger" href="{{ path('homepage') }}">Accueil</a>
                 </li>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_USER') %}
                 <li class="nav-item">
                     <a class="nav-link text-danger" href="{{ path('product_create') }}">Ajouter un produit</a>
                 </li>
